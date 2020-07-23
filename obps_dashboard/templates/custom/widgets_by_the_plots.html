@@ -1,0 +1,246 @@
+{% extends "app/base_site.html" %}
+
+{% block title %} by the plots {% endblock title %}
+
+{% block stylesheets %}
+  {{ block.super }}
+{% endblock stylesheets %}
+
+{% block content %}
+  <div class="right_col" role="main">
+    <div class="">
+      <div class="page-title">
+        <div class="title_left">
+          <h3>Arqueomonitor By The Plots</h3>
+        </div>
+
+
+        <div class="title_right">
+          <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+            <!-- <div class="input-group">
+              <input type="text" class="form-control" placeholder="Search for...">
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="button">Go!</button>
+              </span>
+            </div> -->
+          </div>
+        </div>
+      </div>
+
+      <div class="clearfix"></div>
+
+      <div class="row">
+        <!-- bar chart samples per station -->
+        <div class="col-md-6 col-sm-6 col-xs-12">
+          <div class="x_panel">
+            <div class="x_title">
+              <h2>Samples per Station <small>Sessions</small></h2>
+              <ul class="nav navbar-right panel_toolbox">
+                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">Settings 1</a>
+                    </li>
+                    <li><a href="#">Settings 2</a>
+                    </li>
+                  </ul>
+                </li>
+                <li><a class="close-link"><i class="fa fa-close"></i></a>
+                </li>
+              </ul>
+              <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+              <div id="samples_station" style="width:100%; height:280px;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- bar chart material type -->
+        <div class="col-md-6 col-sm-6 col-xs-12">
+          <div class="x_panel">
+            <div class="x_title">
+              <h2>Material Types <small>Sessions</small></h2>
+              <ul class="nav navbar-right panel_toolbox">
+                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">Settings 1</a>
+                    </li>
+                    <li><a href="#">Settings 2</a>
+                    </li>
+                  </ul>
+                </li>
+                <li><a class="close-link"><i class="fa fa-close"></i></a>
+                </li>
+              </ul>
+              <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+              <div id="material_types" style="width:100%; height:280px;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- bar chart samples height -->
+        <div class="col-md-6 col-sm-6 col-xs-12">
+          <div class="x_panel">
+            <div class="x_title">
+              <h2>Sample Heights <small>Sessions</small></h2>
+              <ul class="nav navbar-right panel_toolbox">
+                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">Settings 1</a>
+                    </li>
+                    <li><a href="#">Settings 2</a>
+                    </li>
+                  </ul>
+                </li>
+                <li><a class="close-link"><i class="fa fa-close"></i></a>
+                </li>
+              </ul>
+              <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+              <div id="sample_heights" style="width:100%; height:280px;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- bar chart deployments per station -->
+        <div class="col-md-6 col-sm-6 col-xs-12">
+          <div class="x_panel">
+            <div class="x_title">
+              <h2>Deployments per Station <small>Sessions</small></h2>
+              <ul class="nav navbar-right panel_toolbox">
+                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                  <!-- <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">Settings 1</a>
+                    </li>
+                    <li><a href="#">Settings 2</a>
+                    </li>
+                  </ul> -->
+                </li>
+                <li><a class="close-link"><i class="fa fa-close"></i></a>
+                </li>
+              </ul>
+              <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+              <div id="deployments_station" style="width:100%; height:280px;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
+
+{% block javascripts %}
+  {{ block.super }}
+  <!-- morris.js -->
+  <script src="/static/vendors/raphael/raphael.min.js"></script>
+  <script src="/static/vendors/morris.js/morris.min.js"></script>
+
+  <script>
+  new Morris.Bar({
+  // ID of the element in which to draw the chart.
+  element: 'deployments_station',
+  // Chart data records -- each entry in this array corresponds to a point on
+  // the chart.
+  data: [
+    { station: 'Bucentaure', value: {{ deployment_station_buc_count }} },
+    { station: 'Fougueux', value: {{ deployment_station_foug_count }} },
+  ],
+
+  // The name of the data record attribute that contains x-values.
+  xkey: 'station',
+  // A list of names of data record attributes that contain y-values.
+  ykeys: ['value'],
+  // Labels for the ykeys -- will be displayed when you hover over the
+  // chart.
+  labels: ['Deployments'],
+  xLabelsDiagonal: false,
+  xLabelMargin: 10,
+  });
+  </script>
+
+  <script>
+  new Morris.Bar({
+  // ID of the element in which to draw the chart.
+  element: 'samples_station',
+  // Chart data records -- each entry in this array corresponds to a point on
+  // the chart.
+  data: [
+    { station: 'Bucentaure', value: {{ sample_station_buc_count }} },
+    { station: 'Fougueux', value: {{ sample_station_foug_count }} },
+  ],
+  // The name of the data record attribute that contains x-values.
+  xkey: 'station',
+  // A list of names of data record attributes that contain y-values.
+  ykeys: ['value'],
+  // Labels for the ykeys -- will be displayed when you hover over the
+  // chart.
+  labels: ['Samples'],
+  xLabelsDiagonal: false,
+  xLabelMargin: 10,
+  });
+  </script>
+
+  <script>
+  new Morris.Bar({
+  // ID of the element in which to draw the chart.
+  element: 'material_types',
+  // Chart data records -- each entry in this array corresponds to a point on
+  // the chart.
+  data: [
+    { material: 'copper', value: {{ material_count_copper }} },
+    { material: 'forged steel', value: {{ material_count_forged }} },
+    { material: 'steel', value: {{ material_count_steel }} },
+    { material: 'brass', value: {{ material_count_brass }} }
+  ],
+  // The name of the data record attribute that contains x-values.
+  xkey: 'material',
+  // A list of names of data record attributes that contain y-values.
+  ykeys: ['value'],
+  // Labels for the ykeys -- will be displayed when you hover over the
+  // chart.
+  labels: ['Samples'],
+  xLabelsDiagonal: false,
+  xLabelMargin: 10,
+  });
+  </script>
+
+  <script>
+  new Morris.Bar({
+  // ID of the element in which to draw the chart.
+  element: 'sample_heights',
+  // Chart data records -- each entry in this array corresponds to a point on
+  // the chart.
+  data: [
+    { height: 'Buried underground', value: {{ h1_count }} },
+    { height: 'Ground surface', value: {{ h2_count }} },
+    { height: 'Water column', value: {{ h3_count }} }
+  ],
+  // The name of the data record attribute that contains x-values.
+  xkey: 'height',
+  // A list of names of data record attributes that contain y-values.
+  ykeys: ['value'],
+  // Labels for the ykeys -- will be displayed when you hover over the
+  // chart.
+  labels: ['Samples'],
+  xLabelsDiagonal: false,
+  xLabelMargin: 5,
+  });
+  </script>
+{% endblock javascripts %}

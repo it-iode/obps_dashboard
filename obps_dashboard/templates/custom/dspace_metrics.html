@@ -1,0 +1,110 @@
+
+{% extends "app/base_site.html" %}
+<!-- {% load static %} -->
+{% block title %} dspace metrics {% endblock title %}
+
+{% block stylesheets %}
+  {{ block.super }}
+{% endblock stylesheets %}
+
+
+{% block content %}
+  <div class="right_col" role="main">
+    <h3>Ocean Best Practices System By The Numbers</h3>
+    <!-- top tiles -->
+	<div class="row">
+        <div class="col-md-12">
+          <div class="">
+            <div class="x_content">
+              <div class="row">
+                <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                  <div class="tile-stats">
+                    <div class="icon"><i class="fa fa-book"></i>
+                    </div>
+                    <div class="count">{{ doc_count }}</div>
+
+                    <h3>Documents</h3>
+                    <p>Total number of documents in the OBPS.</p>
+                  </div>
+                </div>
+                <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                  <div class="tile-stats">
+                    <div class="icon"><i class="fa fa-cubes"></i>
+                    </div>
+                    <div class="count">{{ collection_count }}</div>
+
+                    <h3>Collections</h3>
+                    <p>Total number of collections in OBPS.</p>
+                  </div>
+                </div>
+                <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                  <div class="tile-stats">
+                    <div class="icon"><i class="fa fa-tags"></i>
+                    </div>
+                    <div class="count">{{ community_count }}</div>
+
+                    <h3>Communities</h3>
+                    <p>Number of communities in OBPS.</p>
+                  </div>
+                </div>
+			  </div>
+        <div class="row">
+			    <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                  <div class="tile-stats">
+                    <div class="icon"><i class="fa fa-search"></i>
+                    </div>
+                    <div class="count">{{ doi_count }}</div>
+
+                    <h3>DOIs</h3>
+                    <p>Number of BPs with DOI minted.</p>
+                  </div>
+			    </div>
+
+			    <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                  <div class="tile-stats">
+                    <div class="icon"><i class="fa fa-user"></i>
+                    </div>
+                    <div class="count">{{ community_count }}</div>
+
+                    <h3>Active Submitters</h3>
+                    <p>Number of active submitters of BPs registered on OBPS.</p>
+                  </div>
+			    </div>
+			  </div>
+       </div>
+		  </div>
+	  </div>
+	 </div>
+	</div>
+
+{% endblock content %}
+
+{% block javascripts %}
+  {{ block.super}}
+  <!-- Chart.js -->
+  <script src="/static/vendors/Chart.js/dist/Chart.min.js"></script>
+  <!-- gauge.js -->
+  <script src="/static/vendors/gauge.js/dist/gauge.min.js"></script>
+  <!-- Skycons -->
+  <script src="/static/vendors/skycons/skycons.js"></script>
+  <!-- Flot -->
+  <script src="/static/vendors/Flot/jquery.flot.js"></script>
+  <script src="/static/vendors/Flot/jquery.flot.pie.js"></script>
+  <script src="/static/vendors/Flot/jquery.flot.time.js"></script>
+  <script src="/static/vendors/Flot/jquery.flot.stack.js"></script>
+  <script src="/static/vendors/Flot/jquery.flot.resize.js"></script>
+  <!-- Flot plugins -->
+  <script src="/static/vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
+  <script src="/static/vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
+  <script src="/static/vendors/flot.curvedlines/curvedLines.js"></script>
+  <!-- DateJS -->
+  <script src="/static/vendors/DateJS/build/date.js"></script>
+  <!-- JQVMap -->
+  <script src="/static/vendors/jqvmap/dist/jquery.vmap.js"></script>
+  <script src="/static/vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
+  <script src="/static/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
+  <!-- morris.js -->
+  <script src="/static/vendors/raphael/raphael.min.js"></script>
+  <script src="/static/vendors/morris.js/morris.min.js"></script>
+
+{% endblock javascripts %}
