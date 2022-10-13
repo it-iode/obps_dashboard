@@ -48,7 +48,7 @@
                     <div class="count">{{ countries_count|intcomma }}</div>
 
                     <h3>Countires of Origin</h3>
-                    <p>Countries of origin from users</p>
+                    <p>Countries of origin from users (based on ISO3166 countries list)</p>
                   </div>
 				</div>
 				<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
@@ -232,7 +232,9 @@
       // Labels for the ykeys -- will be displayed when you hover over the
       // chart.
       labels: ['New Users', 'Total Users', 'Total Sessions'],
-      parseTime: false
+      parseTime: false,
+      ymin: 'auto',
+      ymax: 'auto',
     });
   </script>
 
@@ -254,7 +256,9 @@
       // Labels for the ykeys -- will be displayed when you hover over the
       // chart.
       labels: ['Countries'],
-      parseTime: false
+      parseTime: false,
+      ymin: 'auto',
+      ymax: 'auto',
     });
   </script>
 

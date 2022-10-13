@@ -31,17 +31,17 @@
                   <div class="tile-stats">
                     <div class="icon"><i class="fa fa-cubes"></i>
                     </div>
-                    <div class="count">{{ collection_count }}</div>
+                    <div class="count">{{ count_collections }}</div>
 
                     <h3>Collections</h3>
-                    <p>Total number of collections in OBPS.</p>
+                    <p>Total number of collections (including sub-collections) in OBPS.</p>
                   </div>
                 </div>
                 <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
                   <div class="tile-stats">
                     <div class="icon"><i class="fa fa-tags"></i>
                     </div>
-                    <div class="count">{{ community_count }}</div>
+                    <div class="count">{{ count_communities }}</div>
 
                     <h3>Communities</h3>
                     <p>Number of communities in OBPS.</p>
@@ -53,10 +53,10 @@
                   <div class="tile-stats">
                     <div class="icon"><i class="fa fa-search"></i>
                     </div>
-                    <div class="count">{{ doi_count }}</div>
+                    <div class="count">{{ count_dois_obp }}</div>
 
                     <h3>DOIs</h3>
-                    <p>Number of BPs with DOI minted.</p>
+                    <p>Number of documents with DOI minted by OBPS.</p>
                   </div>
 			    </div>
 
@@ -64,7 +64,7 @@
                   <div class="tile-stats">
                     <div class="icon"><i class="fa fa-user"></i>
                     </div>
-                    <div class="count">{{ community_count }}</div>
+                    <div class="count">{{ submitters_count }}</div>
 
                     <h3>Active Submitters</h3>
                     <p>Number of active submitters of BPs registered on OBPS.</p>
@@ -75,7 +75,190 @@
 		  </div>
 	  </div>
 	 </div>
-	</div>
+
+
+   <div class="row">
+    <!-- graph area -->
+    <div class="col-md-6 col-sm-6 col-xs-12">
+      <div class="x_panel">
+        <div class="x_title">
+          <h2>Submitted documents <small> accumulated on a monthly basis into OBPS Repository</small></h2>
+          <div class="clearfix"></div>
+        </div>
+        <div class="x_content2">
+          <div id="submissions_line" style="width:100%; height:400px;"></div>
+        </div>
+      </div>
+      </div>
+       <!-- graph area -->
+      <div class="col-md-6 col-sm-6 col-xs-12">
+         <div class="x_panel">
+           <div class="x_title">
+             <h2>Active submitters <small>into OBPS Repository accumulated on a monthly basis</small></h2>
+             <div class="clearfix"></div>
+           </div>
+           <div class="x_content2">
+             <div id="submitters_line" style="width:100%; height:400px;"></div>
+           </div>
+         </div>
+       </div>
+
+
+     </div>
+
+
+   <div class="row">
+    <!-- graph area -->
+    <div class="col-md-6 col-sm-6 col-xs-12">
+      <div class="x_panel">
+        <div class="x_title">
+          <h2>Updated records <small> accumulated on a monthly basis into OBPS Repository</small></h2>
+          <div class="clearfix"></div>
+        </div>
+        <div class="x_content2">
+          <div id="last_modified_line" style="width:100%; height:400px;"></div>
+        </div>
+      </div>
+      </div>
+       <!-- graph area -->
+      <div class="col-md-6 col-sm-6 col-xs-12">
+         <div class="x_panel">
+           <div class="x_title">
+             <h2>Document year of creation <small>by the producers</small></h2>
+             <div class="clearfix"></div>
+           </div>
+           <div class="x_content2">
+             <div id="year_created_bar" style="width:100%; height:400px;"></div>
+           </div>
+         </div>
+       </div>
+
+
+     </div>
+
+
+     <div class="row">
+       <div class="col-md-12 col-sm-12 col-xs-12">
+         <div class="x_panel">
+           <div class="x_title">
+             <h2>Countries where pubications were released<small>geo-presentation</small></h2>
+             <ul class="nav navbar-right panel_toolbox">
+               <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+               </li>
+               <li><a class="close-link"><i class="fa fa-close"></i></a>
+               </li>
+             </ul>
+             <div class="clearfix"></div>
+           </div>
+           <div class="x_content">
+             <div class="dashboard-widget-content">
+               <div class="col-md-4 hidden-small">
+                 <h2 class="line_30">Top 10 countries</h2>
+
+                 <table class="countries_list">
+                   <tbody>
+                     {% for idx, abstract, date_submitted, doi, doi_obp, handle, maturity_level, publisher_place, submitter_id, title, not_dup, last_modified, year_created in df_countries_top10.itertuples %}
+                          <tr>
+                            <td>{{ idx }}</td>
+                            <td class="fs15 fw700 text-right">{{ abstract }}</td>
+                          </tr>
+                      {% endfor %}
+                   </tbody>
+                 </table>
+               </div>
+               <div id="vmap" class="col-md-8 col-sm-12 col-xs-12" style="height:430px;"></div>
+             </div>
+           </div>
+         </div>
+        </div>
+     </div>
+
+
+     <div class="row">
+      <!-- graph area -->
+      <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="x_panel">
+          <div class="x_title">
+            <h2>Disciplines type percentage <small>evaluated on {{total_disciplines_count}} over {{count_records}} records</small></h2>
+            <div class="clearfix"></div>
+          </div>
+          <div class="x_content2">
+            <div id="disciplines_donut" style="width:100%; height:400px;"></div>
+          </div>
+        </div>
+        </div>
+         <!-- graph area -->
+        <div class="col-md-6 col-sm-6 col-xs-12">
+           <div class="x_panel">
+             <div class="x_title">
+               <h2>Technology Readiness levels (TRLs) <small>evaluated on {{total_trl_count}} over {{count_records}} records</small></h2>
+               <div class="clearfix"></div>
+             </div>
+             <div class="x_content2">
+               <div id="trl_donut" style="width:100%; height:400px;"></div>
+             </div>
+           </div>
+         </div>
+       </div>
+
+
+      <div class="row">
+       <!-- graph area -->
+       <div class="col-md-6 col-sm-6 col-xs-12">
+         <div class="x_panel">
+           <div class="x_title">
+             <h2>Best Practice types percentage <small>evaluated on {{total_bptypes_count}} over {{count_records}} records</small></h2>
+             <div class="clearfix"></div>
+           </div>
+           <div class="x_content2">
+             <div id="bptype_donut" style="width:100%; height:400px;"></div>
+           </div>
+         </div>
+         </div>
+          <!-- graph area -->
+         <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="x_panel">
+              <div class="x_title">
+                <h2>Adoption Types <small>evaluated on {{total_adoptiontypes_count}} over {{count_records}} records</small></h2>
+                <div class="clearfix"></div>
+              </div>
+              <div class="x_content2">
+                <div id="adoption_donut" style="width:100%; height:400px;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      <!-- </div> -->
+
+      <div class="row">
+       <!-- graph area -->
+       <div class="col-md-6 col-sm-6 col-xs-12">
+         <div class="x_panel">
+           <div class="x_title">
+             <h2>Essential Ocean Variables (EOVs) percentage <small>evaluated on {{total_eovs_count}} over {{count_records}} records</small></h2>
+             <div class="clearfix"></div>
+           </div>
+           <div class="x_content2">
+             <div id="eov_donut" style="width:100%; height:400px;"></div>
+           </div>
+         </div>
+         </div>
+          <!-- graph area -->
+         <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="x_panel">
+              <div class="x_title">
+                <h2>Sustainable Development Goals (SDGs) <small>evaluated on {{total_sdgs_count}} over {{count_records}} records</small></h2>
+                <div class="clearfix"></div>
+              </div>
+              <div class="x_content2">
+                <div id="sdg_donut" style="width:100%; height:400px;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
 
 {% endblock content %}
 
@@ -106,5 +289,260 @@
   <!-- morris.js -->
   <script src="/static/vendors/raphael/raphael.min.js"></script>
   <script src="/static/vendors/morris.js/morris.min.js"></script>
+
+
+
+  <script>
+    new Morris.Line({
+      // ID of the element in which to draw the chart.
+      element: 'submissions_line',
+      // Chart data records -- each entry in this array corresponds to a point on
+      // the chart.
+      data: [
+      {% for period, count in dates_counts %}
+        { Date: '{{ period|date:"b-Y" }}', value1: '{{ count }}',
+          },
+      {% endfor %}
+      ],
+      // The name of the data record attribute that contains x-values.
+      xkey: 'Date',
+      // A list of names of data record attributes that contain y-values.
+      ykeys: ['value1'],
+      // Labels for the ykeys -- will be displayed when you hover over the
+      // chart.
+      labels: ['Documents submitted'],
+      parseTime: false,
+      ymin: 'auto',
+      ymax: 'auto',
+    });
+  </script>
+
+  <script>
+    new Morris.Line({
+      // ID of the element in which to draw the chart.
+      element: 'submitters_line',
+      // Chart data records -- each entry in this array corresponds to a point on
+      // the chart.
+      data: [
+      {% for period, count in submitters_counts %}
+        { Date: '{{ period|date:"b-Y" }}', value1: '{{ count }}',
+
+          },
+      {% endfor %}
+      ],
+      // The name of the data record attribute that contains x-values.
+      xkey: 'Date',
+      // A list of names of data record attributes that contain y-values.
+      ykeys: ['value1'],
+      // Labels for the ykeys -- will be displayed when you hover over the
+      // chart.
+      labels: ['Submitters'],
+      parseTime: false,
+      ymin: 'auto',
+      ymax: 'auto',
+    });
+  </script>
+
+  <script>
+    new Morris.Line({
+      // ID of the element in which to draw the chart.
+      element: 'last_modified_line',
+      // Chart data records -- each entry in this array corresponds to a point on
+      // the chart.
+      data: [
+      {% for period, count in dates_counts_last_modified %}
+        { Date: '{{ period|date:"b-Y" }}', value1: '{{ count }}',
+          },
+      {% endfor %}
+      ],
+      // The name of the data record attribute that contains x-values.
+      xkey: 'Date',
+      // A list of names of data record attributes that contain y-values.
+      ykeys: ['value1'],
+      // Labels for the ykeys -- will be displayed when you hover over the
+      // chart.
+      labels: ['Records updated'],
+      parseTime: false,
+      ymin: 'auto',
+      ymax: 'auto',
+    });
+  </script>
+
+  <script>
+  new Morris.Bar({
+  // ID of the element in which to draw the chart.
+  element: 'year_created_bar',
+  // Chart data records -- each entry in this array corresponds to a point on
+  // the chart.
+  data: [
+  {% for year, count in dates_created_counts %}
+    { Date: {{ year }}, value1: {{ count }} },
+  {% endfor %}
+
+
+  ],
+  // The name of the data record attribute that contains x-values.
+  xkey: 'Date',
+  // A list of names of data record attributes that contain y-values.
+  ykeys: ['value1'],
+  // Labels for the ykeys -- will be displayed when you hover over the
+  // chart.
+  labels: ['Creation of documents'],
+  xLabelsDiagonal: false,
+  xLabelMargin: 10,
+  });
+  </script>
+
+  <script>
+      // var test_data = {'es':1, 'gb':1};
+      // console.log(test_data);
+
+      var dum = "{{countries|safe}}";
+      dum = dum.replace(/\su'/g, "'").replace(/{u'/g, "{'").replace(/'/g, '"');
+      console.log(dum);
+      var gdpData = JSON.parse(dum)
+
+      var max = 0,
+          min = Number.MAX_VALUE,
+          cc,
+          startColor = [244, 194, 194],
+          endColor = [255, 3, 62],
+          colors = {},
+          hex;
+
+      //find maximum and minimum values
+      for (cc in gdpData)
+      {
+          if (parseFloat(gdpData[cc]) > max)
+          {
+              max = parseFloat(gdpData[cc]);
+          }
+          if (parseFloat(gdpData[cc]) < min)
+          {
+              min = parseFloat(gdpData[cc]);
+          }
+      }
+
+      //set colors according to values of GDP
+      for (cc in gdpData)
+      {
+          if (gdpData[cc] > 0)
+          {
+              colors[cc] = '#';
+              for (var i = 0; i<3; i++)
+              {
+                  hex = Math.round(startColor[i]
+                      + (endColor[i]
+                      - startColor[i])
+                      * (gdpData[cc] / (max - min))).toString(16);
+
+                  if (hex.length == 1)
+                  {
+                      hex = '0'+hex;
+                  }
+
+                  colors[cc] += (hex.length == 1 ? '0' : '') + hex;
+              }
+          }
+      }
+
+      //initialize JQVMap
+      jQuery('#vmap').vectorMap(
+      {
+          colors: colors,
+          hoverOpacity: 0.7,
+          hoverColor: false,
+          borderWidth: 1,
+          selectedColor: false,
+      });
+  </script>
+
+  <script>
+  new Morris.Donut({
+  // ID of the element in which to draw the chart.
+  element: 'disciplines_donut',
+  // Chart data records
+  data: [
+  // { label: 'presentations', value: 2 },
+  // { label: 'posters', value: 3 },
+  {% for idx, percent in disciplines_percent %}
+    { label: '{{ idx }}', value: '{{ percent }}' },
+  {% endfor %}
+
+  ],
+  });
+  </script>
+
+  <script>
+  new Morris.Donut({
+  // ID of the element in which to draw the chart.
+  element: 'trl_donut',
+  // Chart data records
+  data: [
+  // { label: 'presentations', value: 2 },
+  // { label: 'posters', value: 3 },
+  {% for idx, percent in trl_percent %}
+    { label: '{{ idx }}', value: '{{ percent }}' },
+  {% endfor %}
+
+  ],
+  });
+  </script>
+
+  <script>
+  new Morris.Donut({
+  // ID of the element in which to draw the chart.
+  element: 'bptype_donut',
+  // Chart data records
+  data: [
+  // { label: 'presentations', value: 2 },
+  // { label: 'posters', value: 3 },
+  {% for idx, percent in bptypes_percent %}
+    { label: '{{ idx }}', value: '{{ percent }}' },
+  {% endfor %}
+
+  ],
+  });
+  </script>
+
+  <script>
+  new Morris.Donut({
+  // ID of the element in which to draw the chart.
+  element: 'adoption_donut',
+  // Chart data records
+  data: [
+  {% for idx, percent in adoptiontypes_percent %}
+    { label: '{{ idx }}', value: '{{ percent }}' },
+  {% endfor %}
+  ],
+  });
+  </script>
+
+  <script>
+  new Morris.Donut({
+  // ID of the element in which to draw the chart.
+  element: 'eov_donut',
+  // Chart data records
+  data: [
+  {% for idx, percent in eovs_percent %}
+    { label: '{{ idx }}', value: '{{ percent }}' },
+  {% endfor %}
+  ],
+  });
+  </script>
+
+  <script>
+  new Morris.Donut({
+  // ID of the element in which to draw the chart.
+  element: 'sdg_donut',
+  // Chart data records
+  data: [
+  {% for idx, percent in sdgs_percent %}
+    { label: '{{ idx }}', value: '{{ percent }}' },
+  {% endfor %}
+  ],
+  });
+  </script>
+
 
 {% endblock javascripts %}

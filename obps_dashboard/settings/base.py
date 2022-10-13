@@ -14,8 +14,8 @@ import os
 import obps_dashboard as project_module
 import sys
 
-reload(sys)
-sys.setdefaultencoding('UTF8')
+#reload(sys)
+#sys.setdefaultencoding('UTF8')
 
 BASE_DIR = os.path.dirname(os.path.realpath(project_module.__file__))
 

@@ -1,7 +1,7 @@
 
 {% extends "app/base_site.html" %}
 <!-- {% load static %} -->
-{% block title %} Last 30 days metrics {% endblock title %}
+{% block title %} Newsletters {% endblock title %}
 
 {% block stylesheets %}
   {{ block.super }}
@@ -11,7 +11,7 @@
 {% block content %}
   {% load humanize %}
   <div class="right_col" role="main">
-    <h3>Ocean Best Practices System Last 30 days Metrics from Google Analytics</h3>
+    <h3>Ocean Best Practices System Newsletters</h3>
     <!-- top tiles -->
 	  <div class="row">
         <div class="col-md-12">
@@ -23,10 +23,10 @@
                     <div class="icon"><i class="fa fa-book"></i>
                     </div>
 
-                    <div class="count">{{ total_docs_access_sum|intcomma }}</div>
+                    <div class="count">{{ count_newsletter|intcomma }}</div>
 
-                    <h3>Documents</h3>
-                    <p>Number of accesses to documents</p>
+                    <h3>Published newsletters</h3>
+                    <p>Number of publications</p>
                   </div>
                 <!-- </div> -->
 			      </div>
@@ -35,32 +35,32 @@
                   <div class="tile-stats">
                     <div class="icon"><i class="fa fa-users"></i>
                     </div>
-                    <div class="count">{{ total_new_users_sum|intcomma }}</div>
+                    <div class="count">{{ total_subscribers|intcomma }}</div>
 
-                    <h3>New Users</h3>
-                    <p>Total new users of OBPS</p>
+                    <h3>Subscribers</h3>
+                    <p>Number of subscribers of the current subscribers list</p>
                   </div>
 			    </div>
 				<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
                   <div class="tile-stats">
                     <div class="icon"><i class="fa fa-flag"></i>
                     </div>
-                    <div class="count">{{ countries_count|intcomma }}</div>
+                    <div class="count">{{ count_countries|intcomma }}</div>
 
-                    <h3>Countires of Origin</h3>
-                    <p>Countries of origin from users (based on ISO3166 countries list)</p>
+                    <h3>Countries</h3>
+                    <p>Number of countries of origin for the current subscribers list</p>
                   </div>
 				</div>
-				<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+				<!-- <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
                   <div class="tile-stats">
-                    <div class="icon"><i class="fa fa-sign-in"></i>
+                    <div class="icon"><i class="fa fa-navicon"></i>
                     </div>
-                    <div class="count">{{ visits_num_sum|intcomma }}</div>
+                    <div class="count">{{ total_events_types_counts|intcomma }}</div>
 
-                    <h3>Sessions</h3>
-                    <p>Total number of sessions from users </p>
+                    <h3>Types</h3>
+                    <p>of different activities </p>
                   </div>
-				</div>
+				</div> -->
        </div>
 		  </div>
 	  </div>
@@ -71,11 +71,11 @@
  <div class="col-md-6 col-sm-6 col-xs-12">
    <div class="x_panel">
      <div class="x_title">
-       <h2>Last 30 days Trends <small>Sessions, new users and recurrent users</small></h2>
+       <h2>Subscribed readers <small>evolution on a monthly basis</small></h2>
        <div class="clearfix"></div>
      </div>
      <div class="x_content2">
-       <div id="users_line" style="width:100%; height:400px;"></div>
+       <div id="subscribed_line" style="width:100%; height:400px;"></div>
      </div>
    </div>
    </div>
@@ -83,24 +83,63 @@
    <div class="col-md-6 col-sm-6 col-xs-12">
       <div class="x_panel">
         <div class="x_title">
-          <h2>Last 30 days Trends <small>Countries of origin and Unique Documents accessed</small></h2>
+          <h2>Emails sent <small>on a monthly basis</small></h2>
           <div class="clearfix"></div>
         </div>
         <div class="x_content2">
-          <div id="countries_line" style="width:100%; height:400px;"></div>
+          <div id="emails_sent_line" style="width:100%; height:400px;"></div>
         </div>
       </div>
     </div>
-
   </div>
 
+
+  <div class="row">
+   <!-- graph area -->
+   <div class="col-md-6 col-sm-6 col-xs-12">
+     <div class="x_panel">
+       <div class="x_title">
+         <h2>Unsubscribed readers and email bounces <small>evolution on a monthly basis</small></h2>
+         <div class="clearfix"></div>
+       </div>
+       <div class="x_content2">
+         <div id="bounces_line" style="width:100%; height:400px;"></div>
+       </div>
+     </div>
+     </div>
+      <!-- graph area -->
+     <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="x_panel">
+          <div class="x_title">
+            <h2>Openings <small>evolution on a monthly basis</small></h2>
+            <div class="clearfix"></div>
+          </div>
+          <div class="x_content2">
+            <div id="opens_line" style="width:100%; height:400px;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- graph area -->
+   <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="x_panel">
+        <div class="x_title">
+          <h2>Clicks <small>evolution on a monthly basis</small></h2>
+          <div class="clearfix"></div>
+        </div>
+        <div class="x_content2">
+          <div id="clicks_line" style="width:100%; height:400px;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
   <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
       <div class="x_panel">
         <div class="x_title">
-          <h2>Countries where pubications were released<small>geo-presentation</small></h2>
+          <h2>Countries of origin of newsletter readers<small>geo-presentation for the current list of subscribers</small></h2>
           <ul class="nav navbar-right panel_toolbox">
             <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
             </li>
@@ -111,21 +150,21 @@
         </div>
         <div class="x_content">
           <div class="dashboard-widget-content">
-            <!-- <div class="col-md-4 hidden-small">
+            <div class="col-md-4 hidden-small">
               <h2 class="line_30">Top 10 countries</h2>
 
               <table class="countries_list">
                 <tbody>
-                  {% for idx, country, users, sessions in countries_df.itertuples %}
+                  {% for idx, cc, country,  total in df_group_countries_top10.itertuples %}
                        <tr>
                          <td>{{ country }}</td>
-                         <td class="fs15 fw700 text-right">{{ users }}</td>
+                         <td class="fs15 fw700 text-right">{{ total }}</td>
                        </tr>
                    {% endfor %}
                 </tbody>
               </table>
-            </div> -->
-            <div id="vmap" class="col-md-12 col-sm-12 col-xs-12" style="height:430px;"></div>
+            </div>
+            <div id="vmap" class="col-md-8 col-sm-12 col-xs-12" style="height:430px;"></div>
           </div>
         </div>
       </div>
@@ -133,41 +172,37 @@
   </div>
 
 
-
-
-
-
-
-
-
-
 <div class="row">
 
  <!-- /graph area -->
  <!-- countries of origin table -->
- <div class="col-md-3 col-sm-3 col-xs-12">
+ <div class="col-md-12 col-sm-12 col-xs-12">
    <div class="x_panel">
      <div class="x_title">
-       <h2>Top 20 Countries <small>visiting OBPS last 30 days</small></h2>
+       <h2>Latest 20 newsletters <small>published by OBPS</small></h2>
        <div class="clearfix"></div>
      </div>
      <div class="x_content">
 <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
  <thead>
    <tr>
-     <!-- <th></th> -->
+     <th>Date</th>
+     <th>Name</th>
+     <th>Type</th>
+     <th>Publisher</th>
      <th>Country</th>
-     <th>Users</th>
-     <th>Sessions</th>
    </tr>
  </thead>
  <tbody>
-   {% for idx, country, session, user  in countries_df.itertuples %}
+   {% for idx, activity_name, country, date, event, publisher, type in publications_latest.itertuples %}
         <tr>
             <!-- <th><input type="checkbox" id="check-all" class="flat"></th> -->
+            <td>{{ date }}</td>
+            <td>{{ activity_name }}</td>
+            <td>{{ type }}</td>
+            <td>{{ publisher }}</td>
             <td>{{ country }}</td>
-            <td>{{ user|intcomma }}</td>
-            <td>{{ session|intcomma }}</td>
+
         </tr>
     {% endfor %}
  </tbody>
@@ -176,57 +211,9 @@
 </div>
 </div>
 
-
-<!-- countries of origin table -->
-<div class="col-md-9 col-sm-9 col-xs-12">
-  <div class="x_panel">
-    <div class="x_title">
-      <h2>Top 20 Documents <small>accessed into OBPS last 30 days</small></h2>
-      <div class="clearfix"></div>
-    </div>
-    <div class="x_content">
-<table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
-<thead>
-  <tr>
-    <!-- <th></th> -->
-    <th>Title and Record URL</th>
-    <!-- <th>Record URL</th> -->
-    <th>Users</th>
-    <th>Sessions</th>
-  </tr>
-</thead>
-<tbody>
-  {% for idx, doc_path, session, user, title in pagepaths_df.itertuples %}
-       <tr>
-           <!-- <th><input type="checkbox" id="check-all" class="flat"></th> -->
-           <td>
-             <a href="{{ doc_path }}">{{ title }}</a>
-           </td>
-           <!-- <td>
-             <a href="{{ doc_path }}">{{ doc_path }}</a>
-           </td> -->
-           <!-- <td>{{ doc_path }}</td> -->
-           <td>{{ user|intcomma }}</td>
-           <td>{{ session|intcomma }}</td>
-       </tr>
-   {% endfor %}
-</tbody>
-</table>
 </div>
 </div>
 </div>
-</div>
-</div>
-
-
-
-</div>
-
-
-
-
-
-
 
 
 {% endblock content %}
@@ -255,79 +242,104 @@
   <script src="/static/vendors/jqvmap/dist/jquery.vmap.js"></script>
   <script src="/static/vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
   <script src="/static/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
+
   <!-- morris.js -->
   <script src="/static/vendors/raphael/raphael.min.js"></script>
   <script src="/static/vendors/morris.js/morris.min.js"></script>
 
 
-  <!-- <script>
-  new Morris.Bar({
-  // ID of the element in which to draw the chart.
-  element: 'users_vs_new',
-  // Chart data records -- each entry in this array corresponds to a point on
-  // the chart.
-  data: [
-    { station: 'New Users', value: {{ total_new_users }} },
-    { station: 'Recurrent Users', value: {{ total_users }} },
-  ],
-  // The name of the data record attribute that contains x-values.
-  xkey: 'station',
-  // A list of names of data record attributes that contain y-values.
-  ykeys: ['value'],
-  // Labels for the ykeys -- will be displayed when you hover over the
-  // chart.
-  labels: ['users'],
-  xLabelsDiagonal: false,
-  xLabelMargin: 10,
-  });
-  </script> -->
-
-  <script>
-  new Morris.Donut({
-  // ID of the element in which to draw the chart.
-  element: 'users_vs_new',
-  // Chart data records
-  data: [
-    { label: 'New Users', value: {{ total_new_users }} },
-    { label: 'Total Users', value: {{ total_users }} },
-  ],
-  });
-  </script>
-
   <script>
     new Morris.Line({
       // ID of the element in which to draw the chart.
-      element: 'users_line',
+      element: 'subscribed_line',
       // Chart data records -- each entry in this array corresponds to a point on
       // the chart.
       data: [
-      {% for item in ganalytics_obpsorg_data %}
-        { Date: '{{ item.date_start|date:"d-m-Y" }}', value1: '{{ item.users_num_new }}',
-          value2: '{{ item.users_num_total }}', value3: '{{ item.visits_num }}'},
+      {% for period, count in subscribed_counts %}
+        { Date: '{{ period|date:"b-Y" }}', value1: '{{ count }}',
+
+          },
       {% endfor %}
       ],
       // The name of the data record attribute that contains x-values.
       xkey: 'Date',
       // A list of names of data record attributes that contain y-values.
-      ykeys: ['value1', 'value2', 'value3'],
+      ykeys: ['value1'],
       // Labels for the ykeys -- will be displayed when you hover over the
       // chart.
-      labels: ['New Users', 'Total Users', 'Total Sessions'],
+      labels: ['Subscribed readers'],
       parseTime: false,
       ymin: 'auto',
       ymax: 'auto',
+
     });
   </script>
 
   <script>
     new Morris.Line({
       // ID of the element in which to draw the chart.
-      element: 'countries_line',
+      element: 'emails_sent_line',
       // Chart data records -- each entry in this array corresponds to a point on
       // the chart.
       data: [
-      {% for item in ganalytics_obpsorg_data %}
-        { Date: '{{ item.date_start|date:"d-m-Y" }}', value1: '{{ item.countries_num }}', value2: '{{ item.docs_access_num }}' },
+      {% for period, count in emails_sent_timeseries %}
+        { Date: '{{ period|date:"b-Y" }}', value1: '{{ count }}',
+
+          },
+      {% endfor %}
+      ],
+      // The name of the data record attribute that contains x-values.
+      xkey: 'Date',
+      // A list of names of data record attributes that contain y-values.
+      ykeys: ['value1'],
+      // Labels for the ykeys -- will be displayed when you hover over the
+      // chart.
+      labels: ['emails sent'],
+      parseTime: false,
+      ymin: 'auto',
+      ymax: 'auto',
+
+    });
+  </script>
+
+  <script>
+    new Morris.Line({
+      // ID of the element in which to draw the chart.
+      element: 'bounces_line',
+      // Chart data records -- each entry in this array corresponds to a point on
+      // the chart.
+      data: [
+      {% for period, unsubscribed, hard, soft in bounces_timeseries %}
+        { Date: '{{ period|date:"b-Y" }}', value1: '{{ unsubscribed }}', value2: '{{ hard }}', value3: '{{ soft }}',
+
+          },
+      {% endfor %}
+      ],
+      // The name of the data record attribute that contains x-values.
+      xkey: 'Date',
+      // A list of names of data record attributes that contain y-values.
+      ykeys: ['value1','value2','value3'],
+      // Labels for the ykeys -- will be displayed when you hover over the
+      // chart.
+      labels: ['unsubscribed readers', 'hard bounces', 'soft bounces'],
+      parseTime: false,
+      ymin: 'auto',
+      ymax: 'auto',
+
+    });
+  </script>
+
+  <script>
+    new Morris.Line({
+      // ID of the element in which to draw the chart.
+      element: 'opens_line',
+      // Chart data records -- each entry in this array corresponds to a point on
+      // the chart.
+      data: [
+      {% for period, open_total, unique_open in opens_timeseries %}
+        { Date: '{{ period|date:"b-Y" }}', value1: '{{ open_total }}', value2: '{{ unique_open }}',
+
+          },
       {% endfor %}
       ],
       // The name of the data record attribute that contains x-values.
@@ -336,10 +348,38 @@
       ykeys: ['value1', 'value2'],
       // Labels for the ykeys -- will be displayed when you hover over the
       // chart.
-      labels: ['Countries', 'Unique Documents accessed'],
+      labels: ['opens total', 'unique opens'],
       parseTime: false,
       ymin: 'auto',
       ymax: 'auto',
+
+    });
+  </script>
+
+  <script>
+    new Morris.Line({
+      // ID of the element in which to draw the chart.
+      element: 'clicks_line',
+      // Chart data records -- each entry in this array corresponds to a point on
+      // the chart.
+      data: [
+      {% for period, clicks_total, unique_clicks, unique_subscriber_clicks in clicks_timeseries %}
+        { Date: '{{ period|date:"b-Y" }}', value1: '{{ clicks_total }}', value2: '{{ unique_clicks }}', value3: '{{ unique_subscriber_clicks }}',
+
+          },
+      {% endfor %}
+      ],
+      // The name of the data record attribute that contains x-values.
+      xkey: 'Date',
+      // A list of names of data record attributes that contain y-values.
+      ykeys: ['value1', 'value2', 'value3'],
+      // Labels for the ykeys -- will be displayed when you hover over the
+      // chart.
+      labels: ['clicks total', 'unique clicks', 'unique subscriber clicks'],
+      parseTime: false,
+      ymin: 'auto',
+      ymax: 'auto',
+
     });
   </script>
 
@@ -406,5 +446,4 @@
           selectedColor: false,
       });
   </script>
-
 {% endblock javascripts %}

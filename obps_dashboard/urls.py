@@ -26,6 +26,11 @@ urlpatterns = [
     url(r'^obpsrt/$', views.obps_realtime, name='obpsrt'),
     url(r'^obpshistory/$', views.obps_history, name='obpshistory'),
     url(r'^obpshistory-mainlanding/$', views.obps_history_mainlanding, name='obpshistory_mainlanding'),
+    url(r'^conferences/$', views.conferences, name='conferences'),
+    url(r'^publications/$', views.publications, name='publications'),
+    url(r'^newsletter/$', views.newsletter, name='newsletter'),
+    url(r'^community_engagement/$', views.community_engagement, name='community_engagement'),
+    url(r'^obps_workshops/$', views.obps_workshops, name='obps_workshops'),
 ]
 
 if settings.DEBUG:
