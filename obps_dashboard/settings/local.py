@@ -21,7 +21,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'obps_metrics',
         'USER': 'postgres',
-        'PASSWORD': 'postgres',
+        'PASSWORD': 'K888DdDsnol214',
         'HOST': 'localhost',
         'PORT': '5432',
     }

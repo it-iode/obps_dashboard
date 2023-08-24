@@ -28,7 +28,7 @@ SECRET_KEY = 'yj6o@&vrar6^l1u68!bxumj@xr4&5)zzk!h1qw&63^&@2d3w@#'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['dashboard.oceanbestpractices.org']
 
 
 # Application definition

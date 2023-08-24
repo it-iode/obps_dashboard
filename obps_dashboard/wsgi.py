@@ -8,9 +8,17 @@ https://docs.djangoproject.com/en/1.11/howto/deployment/wsgi/
 """
 
 import os
+import sys
 
 from django.core.wsgi import get_wsgi_application
 
+path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if path not in sys.path:
+    sys.path.append(path)
+
+#os.environ.setdefault("DJANGO_SETTINGS_MODULE", "obps_dashboard.obps_dashboard.settings.local")
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "obps_dashboard.settings.local")
+#os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings.local")
+#os.environ.setdefault("DJANGO_SETTINGS_MODULE", "local")
 
 application = get_wsgi_application()
