@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+
 from django.http import JsonResponse
 from django.shortcuts import render
 from obps_dashboard.apps.models import Ganalytics_obpsorg, Ganalytics_obpsorg_countries, Ganalytics_obpsorg_docs
@@ -282,8 +282,8 @@ def get_countries_names_map():
     	'ZW': 'Zimbabwe',
     	'ZZ': 'Unknown or unspecified country',
     }
-    countries_names_map = dict((k.lower(), v) for k, v in countries_dict.items())
-    countries_names_map = dict([(value, key) for key, value in countries_names_map.items()])
+    countries_names_map = dict((k.lower(), v) for k, v in list(countries_dict.items()))
+    countries_names_map = dict([(value, key) for key, value in list(countries_names_map.items())])
     return countries_names_map
 
 def dspace_metrics(request):
@@ -294,7 +294,7 @@ def dspace_metrics(request):
     df = pd.DataFrame(list(Dspace_records.objects.all().values('handle', 'title', 'abstract', 'date_submitted', 'maturity_level', 'doi', 'doi_obp', 'submitter_id', 'publisher_place', 'country', 'last_modified', 'year_created')))
     count_submitters = len(df.groupby(df['submitter_id']).count())
     count_dois_obp = len(df.groupby(df['doi_obp']).count())
-    print df
+    print(df)
     # date submition
     df_group = df.groupby(df['date_submitted'].dt.to_period('M')).count().cumsum()
     dates_list = df_group.index.tolist()
@@ -336,7 +336,7 @@ def dspace_metrics(request):
 
     records_country_count_list = df_group_countries.title.tolist()
     group_countries_list = list(zip(countries_list, records_country_count_list))
-    group_countries_dict = dict(zip(countries_list, records_country_count_list))
+    group_countries_dict = dict(list(zip(countries_list, records_country_count_list)))
     countries = json.dumps(group_countries_dict)
 
     # Dspace_record_disciplines
@@ -597,7 +597,7 @@ def obps_realtime(request):
                 pagepaths_df.loc[i, 'title'] = records_df.loc[j, 'title']
 
 
-    #print records_df
+    #print(records_df)
     countries_names_map = get_countries_names_map()
     df_group_countries_top10 = countries_df.sort_values(by='users', ascending=False).head(10)
     countries_list = countries_df.country.tolist()
@@ -608,7 +608,7 @@ def obps_realtime(request):
 
     records_country_count_list = countries_df.users.tolist()
     group_countries_list = list(zip(countries_list, records_country_count_list))
-    group_countries_dict = dict(zip(countries_list, records_country_count_list))
+    group_countries_dict = dict(list(zip(countries_list, records_country_count_list)))
     countries = json.dumps(group_countries_dict)
 
     context= {'total_users_sum': users_total_sum, 'total_new_users_sum': users_new_sum,
@@ -732,13 +732,13 @@ def obps_history(request):
             handle = str(records_df.loc[j, 'handle'])
             if handle == doc_path_handle:
                 pagepaths_df.loc[i, 'title'] = records_df.loc[j, 'title']
-                print pagepaths_df.loc[i, 'title']
-                print records_df.loc[j, 'title']
+                print(pagepaths_df.loc[i, 'title'])
+                print(records_df.loc[j, 'title'])
 
 
 
 
-    #print records_df
+    #print(records_df)
     countries_names_map = get_countries_names_map()
     df_group_countries_top10 = countries_df.sort_values(by='users', ascending=False).head(10)
     countries_list = countries_df.country.tolist()
@@ -749,7 +749,7 @@ def obps_history(request):
 
     records_country_count_list = countries_df.users.tolist()
     group_countries_list = list(zip(countries_list, records_country_count_list))
-    group_countries_dict = dict(zip(countries_list, records_country_count_list))
+    group_countries_dict = dict(list(zip(countries_list, records_country_count_list)))
     countries = json.dumps(group_countries_dict)
 
 
@@ -819,7 +819,7 @@ def conferences(request):
 
     activities_country_count_list = df_group_countries.activity_name.tolist()
     group_countries_list = list(zip(countries_list, activities_country_count_list))
-    group_countries_dict = dict(zip(countries_list, activities_country_count_list))
+    group_countries_dict = dict(list(zip(countries_list, activities_country_count_list)))
     countries = json.dumps(group_countries_dict)
 
     context= {
@@ -862,14 +862,14 @@ def publications(request):
     df_group_countries = df_publications.groupby(df_publications['country']).count()
     df_group_countries_top10 = df_group_countries.sort_values(by='activity_name', ascending=False).head(10)
     countries_list = df_group_countries.index.tolist()
-    print countries_list
+    print(countries_list)
     for i in range(0, len(countries_list)):
         for key in countries_names_map:
             if key in countries_list[i]:
                 countries_list[i] = countries_names_map[key]
     activities_country_count_list = df_group_countries.activity_name.tolist()
     group_countries_list = list(zip(countries_list, activities_country_count_list))
-    group_countries_dict = dict(zip(countries_list, activities_country_count_list))
+    group_countries_dict = dict(list(zip(countries_list, activities_country_count_list)))
     countries = json.dumps(group_countries_dict)
 
     context= {
@@ -910,7 +910,7 @@ def newsletter(request):
     locations_count_list = df_newsletter_locations.total.tolist()
     cc_list = df_newsletter_locations['cc'].str.lower().tolist()
     locations_list = list(zip(cc_list, locations_count_list))
-    locations_dict = dict(zip(cc_list, locations_count_list))
+    locations_dict = dict(list(zip(cc_list, locations_count_list)))
     countries = json.dumps(locations_dict)
 
     # Newsletter subscribers grouth
@@ -941,7 +941,7 @@ def newsletter(request):
     total_subscribers = str(df_newsletter_grouth['subscribed'].values[-1])
     count_newsletter = str(df_publications['type'].count())
 
-    print bounces_timeseries
+    print(bounces_timeseries)
 
 
     context= {
@@ -986,7 +986,7 @@ def community_engagement(request):
                 countries_list[i] = countries_names_map[key]
     engagement_country_count_list = df_group_countries.user_community.tolist()
     group_countries_list = list(zip(countries_list, engagement_country_count_list))
-    group_countries_dict = dict(zip(countries_list, engagement_country_count_list))
+    group_countries_dict = dict(list(zip(countries_list, engagement_country_count_list)))
     countries = json.dumps(group_countries_dict)
 
     context= {
@@ -1010,7 +1010,7 @@ def obps_workshops(request):
     num_participants_countries = df['num_participants_countries_origin'].tolist()
     dates_list = df_group.index.tolist()
     workshops_info_timeseries = list(zip(dates_list, num_participants, num_participants_countries))
-    print workshops_info_timeseries
+    print(workshops_info_timeseries)
     df_group = df.groupby(df['date'].dt.year).count()
     dates_list = df_group.index.tolist()
     workshops_count = df_group['name'].tolist()
