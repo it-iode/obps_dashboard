@@ -26,11 +26,8 @@ urlpatterns = [
     re_path(r'^obpsrt/$', views.obps_realtime, name='obpsrt'),
     re_path(r'^obpshistory/$', views.obps_history, name='obpshistory'),
     re_path(r'^obpshistory-mainlanding/$', views.obps_history_mainlanding, name='obpshistory_mainlanding'),
-    re_path(r'^conferences/$', views.conferences, name='conferences'),
-    re_path(r'^publications/$', views.publications, name='publications'),
     re_path(r'^newsletter/$', views.newsletter, name='newsletter'),
-    re_path(r'^community_engagement/$', views.community_engagement, name='community_engagement'),
-    re_path(r'^obps_workshops/$', views.obps_workshops, name='obps_workshops'),
+
 ]
 
 if settings.DEBUG:
