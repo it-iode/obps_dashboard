@@ -2,7 +2,7 @@
 
 django-extensions
 Werkzeug
-jupyter
+#jupyter
 pyzmq
 jinja2
 tornado
